@@ -1,6 +1,9 @@
 from ultralytics import YOLO
 import cv2  # OpenCV library for webcam access
 import numpy
+
+
+#open camera
 cap = cv2.VideoCapture(2)
 
 # Load a model
@@ -10,6 +13,7 @@ model = YOLO('yolov8n-pose.pt')  # load an official model
 while True:
   # Read frame from webcam
   ret, frame = cap.read()
+  frame = cv2.flip(frame, 1)
 
   # Check if frame is read successfully
   if not ret:
@@ -60,7 +64,7 @@ while True:
       Right_Knee = points[0][14]
       Left_Ankle = points[0][15]
       Right_Ankle = points[0][16]
-      print("all " , points,"nose ", points[0][0])
+      print("nose ", points[0][0])
 
   # Display the webcam feed with detections (optional)
   cv2.imshow('Webcam Feed', Oframe)
@@ -72,8 +76,3 @@ while True:
 # Release resources
 cap.release()
 cv2.destroyAllWindows()
-
-
-# results = model('https://ultralytics.com/images/bus.jpg')  # predict on an image
-# for result in results:
-#     result.show()
